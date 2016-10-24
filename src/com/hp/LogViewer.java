@@ -43,7 +43,7 @@ public class LogViewer  extends JFrame {
     JLabel  lab5=new JLabel("vin:");
     JTextField t_vin=new JTextField("12345678901234567");
     JLabel  lab6=new JLabel("起始时间:");
-    JTextField t_sdate=new JTextField("2016-08-13 12:00:00");
+    JTextField t_sdate=new JTextField("");
     JLabel  lab7=new JLabel("关注业务:");
     JComboBox t1 = new JComboBox(types);
     JScrollPane jScrollPane;
@@ -51,7 +51,7 @@ public class LogViewer  extends JFrame {
     Session sess=null;
     Container panel;
     LogReader logReader;
-    JTextArea textArea=new JTextArea("双击文本区可以清空日志");
+    JTextArea textArea=new JTextArea("文本区双击左键调整字体\n文本区双击右键清空日志\n");
     int fontSize=14;
     Font font = new Font("", Font.ROMAN_BASELINE, fontSize);
     public LogViewer()
@@ -78,6 +78,7 @@ public class LogViewer  extends JFrame {
         t_vin.setBounds(200, 40, 150, 20);  panel.add(t_vin);
         lab6.setBounds(370, 40, 70, 20);   panel.add(lab6);
         t_sdate.setBounds(440, 40, 120, 20);  panel.add(t_sdate);
+        t_sdate.setEnabled(false);
         lab7.setBounds(580, 40, 70, 20);   panel.add(lab7);
         t1.setBounds(650, 40, 150, 20);  panel.add(t1);
         bt3.setBounds(810, 40, 60, 20);   panel.add(bt3);
@@ -100,7 +101,7 @@ public class LogViewer  extends JFrame {
                     public void actionPerformed(ActionEvent e) {
                         hostname = host.getText();
                         username = t_username.getText();
-                        password = t_password.getText();
+                        password = new String(t_password.getPassword());
                         try {
                             conn = new Connection(hostname);
                             conn.connect();
@@ -206,23 +207,18 @@ public class LogViewer  extends JFrame {
                 int y = e.getY();
                 int z = e.getButton();
                 int count = e.getClickCount();
-                if (z == 1&&count == 2) {//左键双击 字号-
-                    if(fontSize>8){
-                        fontSize--;
-                        Font font = new Font("", Font.ROMAN_BASELINE, fontSize);
-                        textArea.setFont(font);
+                if (z == 1&&count == 2) {//左键双击 字号+
+                    if(fontSize<18){
+                        fontSize++;
+                    }else{
+                        fontSize=10;
                     }
+                    Font font = new Font("", Font.ROMAN_BASELINE, fontSize);
+                    textArea.setFont(font);
 
                 }
-                if (z == 2&&count == 2) {//中键双击 清空文本
+                if (z == 3&&count == 2) {//右键双击 清空文本
                     textArea.setText("");
-                }
-                if (z == 3&&count == 2) {//右键双击 字号+
-                    if(fontSize<20){
-                        fontSize++;
-                        Font font = new Font("", Font.ROMAN_BASELINE, fontSize);
-                        textArea.setFont(font);
-                    }
                 }
                 panel.repaint();
             }
