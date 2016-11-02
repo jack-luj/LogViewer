@@ -35,13 +35,13 @@ public class LogViewer  extends JFrame {
     JPasswordField t_password=new JPasswordField("");
 
     JLabel  lab8=new JLabel("文件路径:");
-    JTextField t_filename=new JTextField("/home/jackl/Desktop/ping.txt");
+    JTextField t_filename=new JTextField("/home/vat/BriAir/BriAir.log");
 
 
     JLabel  lab4=new JLabel("imei:");
-    JTextField t_imei=new JTextField("352255060157991");
+    JTextField t_imei=new JTextField("");
     JLabel  lab5=new JLabel("vin:");
-    JTextField t_vin=new JTextField("12345678901234567");
+    JTextField t_vin=new JTextField("");
     JLabel  lab6=new JLabel("起始时间:");
     JTextField t_sdate=new JTextField("");
     JLabel  lab7=new JLabel("关注业务:");
@@ -56,7 +56,7 @@ public class LogViewer  extends JFrame {
     Font font = new Font("", Font.ROMAN_BASELINE, fontSize);
     public LogViewer()
     {
-        this.setTitle("LogViewer");
+        this.setTitle("LogViewer - v1.0");
          panel = getContentPane();
 
         panel.setLayout(null);
@@ -74,10 +74,10 @@ public class LogViewer  extends JFrame {
 
         lab4.setBounds(10, 40, 30, 20);   panel.add(lab4);
         t_imei.setBounds(40, 40, 120, 20);  panel.add(t_imei);
-        lab5.setBounds(180, 40, 20, 20);   panel.add(lab5);
-        t_vin.setBounds(200, 40, 150, 20);  panel.add(t_vin);
-        lab6.setBounds(370, 40, 70, 20);   panel.add(lab6);
-        t_sdate.setBounds(440, 40, 120, 20);  panel.add(t_sdate);
+        //lab5.setBounds(180, 40, 20, 20);   panel.add(lab5);
+        //t_vin.setBounds(200, 40, 150, 20);  panel.add(t_vin);
+        //lab6.setBounds(370, 40, 70, 20);   panel.add(lab6);
+        //t_sdate.setBounds(440, 40, 120, 20);  panel.add(t_sdate);
         t_sdate.setEnabled(false);
         lab7.setBounds(580, 40, 70, 20);   panel.add(lab7);
         t1.setBounds(650, 40, 150, 20);  panel.add(t1);

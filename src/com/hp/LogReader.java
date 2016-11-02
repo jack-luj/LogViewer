@@ -44,7 +44,7 @@ public class LogReader extends Thread {
                 System.out.println("imeiHex:" + imeiHex);
             }
             sess.execCommand(cmd);
-            System.out.println("Here is some information from remote server:");
+            System.out.println("显示来自服务器的文本信息:");
             InputStream stdout = new StreamGobbler(sess.getStdout());
             BufferedReader br = new BufferedReader(new InputStreamReader(stdout, "UTF-8"));
             while (true) {
@@ -84,13 +84,16 @@ public class LogReader extends Thread {
         // replace [0x13][0x14][0x24][0x25][0x28][0x29][0x31]
         boolean check = false;
         if (str != null) {
-            System.out.println(str);
-            if (str.indexOf(imeiHex) > -1) {//imei匹配
+            //System.out.println(str);
+            if (imeiHex.length() > 0 && str.indexOf(imeiHex) > -1) {//imei hex匹配
                 check = true;
             }
-            if (vin.length() == 17 && str.indexOf(vin) > -1) {//vin匹配
+            if (imei.length() > 0 && str.indexOf(imei) > -1) {//imei匹配
                 check = true;
             }
+           /* if (vin.length() == 17 && str.indexOf(vin) > -1) {//vin匹配
+                check = true;
+            }*/
             if (str.indexOf("exception") > -1) {//exception输出
                 check = true;
             }
@@ -101,23 +104,24 @@ public class LogReader extends Thread {
                 if (str.indexOf("[0x31]") > -1 || str.indexOf("[0x13]") > -1 || str.indexOf("[0x14]") > -1) {
                     check = true;
                 }
-                if (watchType == 2) {//实时数据
-                    if (str.indexOf("[0x22]") > -1 || str.indexOf("[0x23]") > -1)
-                        check = true;
-                }
-                if (watchType == 3) {//故障数据
-                    if (str.indexOf("[0x28]") > -1 || str.indexOf("[0x29]") > -1)
-                        check = true;
-                }
-                if (watchType == 4) {//报警数据
-                    if (str.indexOf("[0x24]") > -1 || str.indexOf("[0x25]") > -1)
-                        check = true;
-                }
-                if (watchType == 5) {//注册数据
-                    if (str.indexOf("[0x13]") > -1 || str.indexOf("[0x14]") > -1 || str.indexOf("Socket") > -1 || str.indexOf("exceptionCaught") > -1)
-                        check = true;
-                }
             }
+            if (watchType == 2) {//实时数据
+                if (str.indexOf("[0x22]") > -1 || str.indexOf("[0x23]") > -1)
+                    check = true;
+            }
+            if (watchType == 3) {//故障数据
+                if (str.indexOf("[0x28]") > -1 || str.indexOf("[0x29]") > -1)
+                    check = true;
+            }
+            if (watchType == 4) {//报警数据
+                if (str.indexOf("[0x24]") > -1 || str.indexOf("[0x25]") > -1)
+                    check = true;
+            }
+            if (watchType == 5) {//注册数据[0x13]
+                if (str.indexOf("[0x13]") > -1 || str.indexOf("[0x14]") > -1 || str.indexOf("Socket") > -1 || str.indexOf("exceptionCaught") > -1)
+                    check = true;
+            }
+
             if (check) {
                // str = str.replaceAll("AlarmService", "监控服务");
                 return str;
